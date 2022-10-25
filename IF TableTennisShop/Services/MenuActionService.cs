@@ -38,5 +38,26 @@ namespace IF_TableTennisShop.Services
             }
             return menu;
         }
+
+        internal void SelectCategoryOfItem(int itemCategory, string v2)
+        {
+            
+        }
+        public MenuActionService Initialize(MenuActionService actionService)
+        {
+            actionService.AddNewAction(1, "Add item", "Main");
+            actionService.AddNewAction(2, "Remove item", "Main");
+            actionService.AddNewAction(3, "Check inventory", "Main");
+            actionService.AddNewAction(4, "Show list of items", "Main");
+            actionService.AddNewAction(5, "Show list of items by type Id", "Main");
+            actionService.AddNewAction(6, "Close the program", "Main");
+
+            actionService.AddNewAction(1, $"{LevelOfAdvancement.Beginner}", "AddNewItemMenu");
+            actionService.AddNewAction(2, $"{LevelOfAdvancement.Intermediate}", "AddNewItemMenu");
+            actionService.AddNewAction(3, $"{LevelOfAdvancement.Advanced}", "AddNewItemMenu");
+
+
+            return actionService;
+        }
     }
 }

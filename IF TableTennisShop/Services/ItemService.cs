@@ -14,29 +14,37 @@ namespace IF_TableTennisShop.Services
         {
             ItemsTTRacket = new List<Item_TableTennisRacket>();
         }
-        internal int AddNewItemView(MenuActionService actionService)
+
+        public int AddNewItem()
         {
+            MenuActionService actionService = new MenuActionService();
+            actionService = Program.Initialize(actionService);
+            Item_TableTennisRacket itemTTRacket = new Item_TableTennisRacket();
+            Console.Write("Please enter id for new item: ");
+            var id = Console.ReadLine();
+            int.TryParse(id, out int itemId);
+            Console.Write("Please enter name of the item: ");
+            var name = Console.ReadLine();
+            Console.WriteLine("----------");
+            Console.WriteLine("Level of advancement: ");
             var addNewItemMenu = actionService.GetMenuActionByMenuName("AddNewItemMenu");
-            Console.WriteLine("Select one of the following options: ");
             foreach (var menuAction in addNewItemMenu)
             {
                 Console.WriteLine($"{menuAction.Id}. {menuAction.Name}");
             }
-            var operation = int.Parse(Console.ReadLine());
-            return operation;
-        }
-        public int AddNewItem(int itemType)
-        {
-            Item_TableTennisRacket itemTTRacket = new Item_TableTennisRacket();
-            itemTTRacket.TypeId = (StageOfAdvancement)itemType;
-            Console.WriteLine("Please enter id for new item: ");
-            var id = Console.ReadLine();
-            int.TryParse(id, out int itemId);
-            Console.WriteLine("Please enter name of the item: ");
-            var name = Console.ReadLine();
+            Console.WriteLine("----------");
+            Console.Write("Choose level of advancement: ");
+            var typeIdRead = Console.ReadLine();
+            int.TryParse(typeIdRead, out int typeId);
+            itemTTRacket.TypeId = (LevelOfAdvancement)typeId;
+            
+            Console.Write("Please enter the price of the item: ");
+            var priceRead = Console.ReadLine();
+            double.TryParse(priceRead, out double price);
 
             itemTTRacket.Id = itemId;
             itemTTRacket.ModelName = name;
+            itemTTRacket.Price = price;
             ItemsTTRacket.Add(itemTTRacket);
             return itemId;
         }
@@ -44,8 +52,10 @@ namespace IF_TableTennisShop.Services
         {
             foreach (var item in ItemsTTRacket)
             {
-                Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine($"{item.Id}. {item.ModelName} || {item.TypeId}");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("List of items: ");
+                Console.WriteLine($"{item.Id}. {item.ModelName} || {item.TypeId} || {item.Price}");
+                Console.WriteLine("------------------------------");
                 Console.ResetColor();
             }
         }
@@ -69,6 +79,31 @@ namespace IF_TableTennisShop.Services
                 }
             }
             ItemsTTRacket.Remove(itemToRemove);
+        }
+
+        internal int CheckInventoryView()
+        {
+            Console.WriteLine("Please enter id of item you wish to check: ");
+            var itemId = Console.ReadLine();
+            int.TryParse(itemId, out int id);
+            return id;
+        }
+
+        internal void CheckInventory(int itemId)
+        {
+            Item_TableTennisRacket itemToCheck = new Item_TableTennisRacket();
+            foreach (var item in ItemsTTRacket)
+            {
+                if (item.Id == itemId)
+                {
+                    itemToCheck = item;
+                    break;
+                }
+                Console.WriteLine($"Racket ID: {itemToCheck.Id}. ");
+                Console.WriteLine($"Model name: {itemToCheck.ModelName}");
+                Console.WriteLine($"Stage of advancement: {itemToCheck.TypeId}.");
+                Console.WriteLine($"Price: {itemToCheck.Price}$.");
+            }
         }
     }
 }
