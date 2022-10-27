@@ -1,24 +1,23 @@
-﻿using IF_TableTennisShop.Model;
+﻿using IF_TableTennisShop.Model.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TableTennisShop.App.Common;
+using TableTennisShop.Domain.Entity;
+using TableTennisShop.Domain.Helpers;
 
-namespace IF_TableTennisShop.Services
+namespace TableTennisShop.App.Concrete
 {
-    public class ItemService
+    public class ItemService : BaseService<BaseItemProps>
     {
-        List<Item_TableTennisRacket> ItemsTTRacket { get; set; }
-        public ItemService()
-        {
-            ItemsTTRacket = new List<Item_TableTennisRacket>();
-        }
+        List<Item_TableTennisRacket> ItemsTtRacket = new List<Item_TableTennisRacket>();
 
         public int AddNewItem()
         {
             MenuActionService actionService = new MenuActionService();
-            actionService = Program.Initialize(actionService);
+
             Item_TableTennisRacket itemTTRacket = new Item_TableTennisRacket();
             Console.Write("Please enter id for new item: ");
             var id = Console.ReadLine();
@@ -37,7 +36,7 @@ namespace IF_TableTennisShop.Services
             var typeIdRead = Console.ReadLine();
             int.TryParse(typeIdRead, out int typeId);
             itemTTRacket.TypeId = (LevelOfAdvancement)typeId;
-            
+
             Console.Write("Please enter the price of the item: ");
             var priceRead = Console.ReadLine();
             double.TryParse(priceRead, out double price);
@@ -45,12 +44,12 @@ namespace IF_TableTennisShop.Services
             itemTTRacket.Id = itemId;
             itemTTRacket.ModelName = name;
             itemTTRacket.Price = price;
-            ItemsTTRacket.Add(itemTTRacket);
+            ItemsTtRacket.Add(itemTTRacket);
             return itemId;
         }
         public void ListAllItems()
         {
-            foreach (var item in ItemsTTRacket)
+            foreach (var item in ItemsTtRacket)
             {
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("List of items: ");
@@ -59,7 +58,7 @@ namespace IF_TableTennisShop.Services
                 Console.ResetColor();
             }
         }
-        internal int RemoveItemView(MenuActionService actionService)
+        public int RemoveItemView()
         {
             Console.Write("Enter item ID to be removed: ");
             var removeItem = Console.ReadKey();
@@ -67,10 +66,10 @@ namespace IF_TableTennisShop.Services
             return id;
         }
 
-        internal void RemoveItem(int removeId)
+        public void RemoveItem(int removeId)
         {
             Item_TableTennisRacket itemToRemove = new Item_TableTennisRacket();
-            foreach (var item in ItemsTTRacket)
+            foreach (var item in ItemsTtRacket)
             {
                 if (item.Id == removeId)
                 {
@@ -78,10 +77,10 @@ namespace IF_TableTennisShop.Services
                     break;
                 }
             }
-            ItemsTTRacket.Remove(itemToRemove);
+            ItemsTtRacket.Remove(itemToRemove);
         }
 
-        internal int CheckInventoryView()
+        public int CheckInventoryView()
         {
             Console.WriteLine("Please enter id of item you wish to check: ");
             var itemId = Console.ReadLine();
@@ -89,10 +88,10 @@ namespace IF_TableTennisShop.Services
             return id;
         }
 
-        internal void CheckInventory(int itemId)
+        public void CheckInventory(int itemId)
         {
             Item_TableTennisRacket itemToCheck = new Item_TableTennisRacket();
-            foreach (var item in ItemsTTRacket)
+            foreach (var item in ItemsTtRacket)
             {
                 if (item.Id == itemId)
                 {

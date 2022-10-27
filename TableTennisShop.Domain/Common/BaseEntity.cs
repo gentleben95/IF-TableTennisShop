@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TableTennisShop.Domain.Helpers;
 
-namespace IF_TableTennisShop.Model
+namespace TableTennisShop.Domain.Common
 {
-    public class Item_TableTennisRacket
+    public class BaseEntity
     {
-        // Id
-        // Nazwa modelu
-        // Stopień zaawansowania
-        // cena
         public int Id { get; set; }
         public string ModelName { get; set; }
         public LevelOfAdvancement TypeId { get; set; }

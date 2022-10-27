@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IF_TableTennisShop.Model
+namespace TableTennisShop.Domain.Helpers
 {
     public enum LevelOfAdvancement
     {
-      Beginner = 1,
-      Intermediate = 2,
-      Advanced = 3,
-      None = 4,
+        Beginner = 1,
+        Intermediate,
+        Advanced,
+        None,
     }
 }

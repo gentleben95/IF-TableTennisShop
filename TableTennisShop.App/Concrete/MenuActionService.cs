@@ -1,24 +1,26 @@
-﻿using IF_TableTennisShop.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
+using TableTennisShop.App.Common;
+using TableTennisShop.Domain.Entity;
+using TableTennisShop.Domain.Helpers;
 
-namespace IF_TableTennisShop.Services
+namespace TableTennisShop.App.Concrete
 {
-    public class MenuActionService
+    public class MenuActionService : BaseService<MenuAction>
     {
-        public List<MenuAction> _menuActions; 
+        private List<MenuAction> _menuActions;
         public MenuActionService()
         {
-            _menuActions = new List<MenuAction>(); 
+            _menuActions = new List<MenuAction>();
         }
-        
-        public void AddNewAction(int id, string name, string menuName )
+
+        public void AddNewAction(int id, string name, string menuName)
         {
-            MenuAction menuAction = new MenuAction
+            MenuAction menuAction = new MenuAction()
             {
                 Id = id,
                 Name = name,
@@ -41,7 +43,7 @@ namespace IF_TableTennisShop.Services
 
         internal void SelectCategoryOfItem(int itemCategory, string v2)
         {
-            
+
         }
         public MenuActionService Initialize(MenuActionService actionService)
         {

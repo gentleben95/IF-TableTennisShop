@@ -1,5 +1,6 @@
-﻿using IF_TableTennisShop.Model;
-using IF_TableTennisShop.Services;
+﻿using IF_TableTennisShop.Model.Items;
+using TableTennisShop.App.Concrete;
+using TableTennisShop.Domain.Helpers;
 
 namespace IF_TableTennisShop
 {
@@ -9,36 +10,32 @@ namespace IF_TableTennisShop
         {
             MenuActionService actionService = new MenuActionService();
             ItemService itemService = new ItemService();
-            Item_TableTennisRacket racketCategory = new();
-            Item_TableTennisBall ballCategory = new();
-            Item_TableTennisBall tableCategory = new();
+
             Console.WriteLine("Welcome to TTExperts");
-
-
-            MenuActionService menuActionService = Initialize(actionService);
+            MenuActionService menuActionService = MenuActionService.Initialize(actionService);
             actionService = menuActionService;
             
             bool mainMenuView = true;
             while (mainMenuView)
-
                 {
-                
                 var mainMenu = actionService.GetMenuActionByMenuName("Main");
                 foreach (var menu in mainMenu)
                 {
                     Console.WriteLine($"{menu.Id}. {menu.Name}");
                 }
                 Console.Write("Choose action: ");
-                var operation = int.Parse(Console.ReadLine());
+                var operation1 = Console.ReadLine();
+                int.TryParse(operation1, out int operation);
                 switch (operation)
                 {
                     case 1:
 
                         var id = itemService.AddNewItem();
                         Console.Clear();
+                        itemService.ListAllItems();
                         break;
                     case 2:
-                        var removeId  = itemService.RemoveItemView(actionService);
+                        var removeId  = itemService.RemoveItemView();
                         itemService.RemoveItem(removeId);
                         Console.Clear();
                         break;
@@ -64,26 +61,8 @@ namespace IF_TableTennisShop
                     default:
                         Console.WriteLine("Wrong input");
                         break;
-                }
-                
+                }  
             }
-            
-        }
-
-        public static MenuActionService Initialize(MenuActionService actionService)
-        {
-            actionService.AddNewAction(1, "Add item", "Main" );
-            actionService.AddNewAction(2, "Remove item", "Main" );
-            actionService.AddNewAction(3, "Check inventory", "Main" );
-            actionService.AddNewAction(4, "Show list of items", "Main" );
-            actionService.AddNewAction(5, "Show list of items by type Id", "Main" );
-            actionService.AddNewAction(6, "Close the program", "Main" );
-
-            actionService.AddNewAction(1, $"{LevelOfAdvancement.Beginner}", "AddNewItemMenu");
-            actionService.AddNewAction(2, $"{LevelOfAdvancement.Intermediate}", "AddNewItemMenu");
-            actionService.AddNewAction(3, $"{LevelOfAdvancement.Advanced}", "AddNewItemMenu");
-
-            return actionService;
         }
     }
 }
