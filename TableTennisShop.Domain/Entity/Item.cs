@@ -8,7 +8,7 @@ using TableTennisShop.Domain.Helpers;
 
 namespace TableTennisShop.Domain.Entity
 {
-    public class BaseItemProps : BaseEntity
+    public class Item : BaseEntity
     {
 
     }

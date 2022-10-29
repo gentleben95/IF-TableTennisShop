@@ -10,8 +10,20 @@ using TableTennisShop.Domain.Helpers;
 
 namespace TableTennisShop.App.Concrete
 {
-    public class ItemService : BaseService<BaseItemProps>
+    public class ItemService : BaseService<Item>
     {
+        public ItemService()
+        {
+            // Add read file from xml
+        }
+        public Item UpdateItemDetails(Item item, string name, TypeOfItem typeId, LevelOfAdvancement levelId)
+        {
+            item.Name = name;
+            item.TypeId = typeId;
+            item.LevelId = levelId;
+            return item;
+        }
+        /*
         List<Item_TableTennisRacket> ItemsTtRacket = new List<Item_TableTennisRacket>();
 
         public int AddNewItem()
@@ -104,5 +116,6 @@ namespace TableTennisShop.App.Concrete
                 Console.WriteLine($"Price: {itemToCheck.Price}$.");
             }
         }
+        */
     }
 }

@@ -1,6 +1,7 @@
 ﻿using IF_TableTennisShop.Model.Items;
 using TableTennisShop.App.Concrete;
 using TableTennisShop.Domain.Helpers;
+using TableTennisShop.App.Managers;
 
 namespace IF_TableTennisShop
 {
@@ -10,58 +11,32 @@ namespace IF_TableTennisShop
         {
             MenuActionService actionService = new MenuActionService();
             ItemService itemService = new ItemService();
+            ItemManager itemManager = new ItemManager(itemService, actionService);
 
-            Console.WriteLine("Welcome to TTExperts");
-            MenuActionService menuActionService = MenuActionService.Initialize(actionService);
-            actionService = menuActionService;
-            
-            bool mainMenuView = true;
-            while (mainMenuView)
+            while (true)
+            {
+                Console.Clear();
+                var mainMenu = actionService.GetMenuActionsByMenuName("Main");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Welcome to Table Tennis Shop!\n");
+                Console.ResetColor();
+                for (int i = 0; i < mainMenu.Count; i++)
                 {
-                var mainMenu = actionService.GetMenuActionByMenuName("Main");
-                foreach (var menu in mainMenu)
-                {
-                    Console.WriteLine($"{menu.Id}. {menu.Name}");
+                    Console.WriteLine($"{mainMenu[i].Id}. {mainMenu[i].Name}");
                 }
-                Console.Write("Choose action: ");
-                var operation1 = Console.ReadLine();
-                int.TryParse(operation1, out int operation);
-                switch (operation)
+                var chosenOption = Console.ReadKey().KeyChar;
+                switch (chosenOption)
                 {
-                    case 1:
+                    case '0':
+                        // xml save to file
+                        Environment.Exit(0);
+                        break;
+                    case '1':
+                        itemManager.SelectOptionInItemMenu();
+                        break;
+                }
 
-                        var id = itemService.AddNewItem();
-                        Console.Clear();
-                        itemService.ListAllItems();
-                        break;
-                    case 2:
-                        var removeId  = itemService.RemoveItemView();
-                        itemService.RemoveItem(removeId);
-                        Console.Clear();
-                        break;
-                    case 3:
-                        var itemId = itemService.CheckInventoryView();
-                        itemService.CheckInventory(itemId);
-                        Console.Clear();
-                        break;
-                    case 4:
-                        Console.Clear();
-                        itemService.ListAllItems();
-                        break;
-                    case 5:
-                        Console.Clear();
-                        
-                        break;
-                    case 6:
-                        Console.Clear();
-                        Console.WriteLine("\nSee you soon again!");
-                        mainMenuView = false;
-                        break;
-                        
-                    default:
-                        Console.WriteLine("Wrong input");
-                        break;
-                }  
+                  
             }
         }
     }

@@ -12,54 +12,46 @@ namespace TableTennisShop.App.Concrete
 {
     public class MenuActionService : BaseService<MenuAction>
     {
-        private List<MenuAction> _menuActions;
         public MenuActionService()
         {
-            _menuActions = new List<MenuAction>();
+            Initialize();
         }
-
-        public void AddNewAction(int id, string name, string menuName)
+        public List<MenuAction> GetMenuActionsByMenuName(string menuName)
         {
-            MenuAction menuAction = new MenuAction()
-            {
-                Id = id,
-                Name = name,
-                MenuName = menuName,
-            };
-            _menuActions.Add(menuAction);
-        }
-        public List<MenuAction> GetMenuActionByMenuName(string menuName) // metoda do wyswietlania menu
-        {
-            List<MenuAction> menu = new List<MenuAction>();
-            foreach (var menuAction in _menuActions)
+            List<MenuAction> result = new List<MenuAction>();
+            foreach (var menuAction in Items)
             {
                 if (menuAction.MenuName == menuName)
                 {
-                    menu.Add(menuAction);
+                    result.Add(menuAction);
                 }
             }
-            return menu;
+            return result;
         }
-
-        internal void SelectCategoryOfItem(int itemCategory, string v2)
+        private void Initialize()
         {
+            AddItem(new MenuAction(0, "Exit", "Main"));
+            AddItem(new MenuAction(1, "Item service", "Main"));
+
+            AddItem(new MenuAction(0, "Back", "ItemView"));
+            AddItem(new MenuAction(1, "Show list of items", "ItemView"));
+            AddItem(new MenuAction(2, "Show list of items by it's type", "ItemView"));
+            AddItem(new MenuAction(3, "Show Details of item", "ItemView"));
+            AddItem(new MenuAction(4, "Add item", "ItemView"));
+            AddItem(new MenuAction(5, "Update item details", "ItemView"));
+            AddItem(new MenuAction(6, "Remove item", "ItemView"));
+
+            AddItem(new MenuAction(1, $"{TypeOfItem.TableTennisRackets}", "TypeOfItemView"));
+            AddItem(new MenuAction(2, $"{TypeOfItem.TableTennisBalls}", "TypeOfItemView"));
+            AddItem(new MenuAction(3, $"{TypeOfItem.TennisTables}", "TypeOfItemView"));
+
+            AddItem(new MenuAction(1, $"{LevelOfAdvancement.Beginner}", "LevelOfItemView"));
+            AddItem(new MenuAction(2, $"{LevelOfAdvancement.Intermediate}", "LevelOfItemView"));
+            AddItem(new MenuAction(3, $"{LevelOfAdvancement.Advanced}", "LevelOfItemView"));
+            AddItem(new MenuAction(4, $"{LevelOfAdvancement.None}", "LevelOfItemView"));
 
         }
-        public MenuActionService Initialize(MenuActionService actionService)
-        {
-            actionService.AddNewAction(1, "Add item", "Main");
-            actionService.AddNewAction(2, "Remove item", "Main");
-            actionService.AddNewAction(3, "Check inventory", "Main");
-            actionService.AddNewAction(4, "Show list of items", "Main");
-            actionService.AddNewAction(5, "Show list of items by type Id", "Main");
-            actionService.AddNewAction(6, "Close the program", "Main");
-
-            actionService.AddNewAction(1, $"{LevelOfAdvancement.Beginner}", "AddNewItemMenu");
-            actionService.AddNewAction(2, $"{LevelOfAdvancement.Intermediate}", "AddNewItemMenu");
-            actionService.AddNewAction(3, $"{LevelOfAdvancement.Advanced}", "AddNewItemMenu");
-
-
-            return actionService;
-        }
+        
     }
+           
 }

@@ -10,8 +10,4 @@
     <ProjectReference Include="..\TableTennisShop.Domain\TableTennisShop.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Managers\" />
-  </ItemGroup>
-
 </Project>
