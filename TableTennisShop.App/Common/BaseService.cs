@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using TableTennisShop.App.Abstract;
+using TableTennisShop.App.Concrete;
 using TableTennisShop.Domain.Common;
 
 namespace TableTennisShop.App.Common
@@ -70,6 +74,22 @@ namespace TableTennisShop.App.Common
             }
             return lastId;
         }
-        // Add save and read from xml
+        public void SaveXml(ItemService itemservice, string path) // Add save and read from xml
+        {
+            string xml = "";
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemService));
+            TextWriter writer = new StreamWriter(path);
+            xmlSerializer.Serialize(writer, itemservice);
+        }
+        public void ReadXml (string path)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemService));
+            ItemService itemService;
+            using (XmlReader reader = XmlReader.Create(path))
+            {
+                itemService = (ItemService)xmlSerializer.Deserialize(reader);
+            }
+            Console.WriteLine();
+        }
     }
 }

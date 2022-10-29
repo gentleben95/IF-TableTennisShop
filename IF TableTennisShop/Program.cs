@@ -10,7 +10,7 @@ namespace IF_TableTennisShop
         static void Main(string[] args)
         {
             MenuActionService actionService = new MenuActionService();
-            ItemService itemService = new ItemService();
+            ItemService itemService = new ItemService(@"");
             ItemManager itemManager = new ItemManager(itemService, actionService);
 
             while (true)

@@ -3,6 +3,7 @@ using System.Reflection.Metadata;
 using TableTennisShop.App.Concrete;
 using TableTennisShop.Domain.Entity;
 using TableTennisShop.Domain.Helpers;
+using TableTennisShop.App.Common;
 
 namespace TableTennisShop.App.Managers
 {
@@ -10,6 +11,7 @@ namespace TableTennisShop.App.Managers
     {
         private readonly MenuActionService _actionService;
         private ItemService _itemService;
+        BaseService<Item> baseService = new();
         public ItemManager(ItemService itemService, MenuActionService actionService)
         {
             _actionService = actionService;
@@ -29,13 +31,14 @@ namespace TableTennisShop.App.Managers
                 var chosenOption = Console.ReadKey().KeyChar;
                 switch (chosenOption)
                 {
-                    case '0': // Back
+                    case '0':
+                        baseService.SaveXml(_itemService, @"C:\Users\benia\Testing\TableTennisShop.xml");
                         break;
-                    case '1': // ShowListOfItems
+                    case '1': 
                         ItemsView(null, true);
                         GoToMenuView();
                         break;
-                    case '2': // Show list of items by it's type
+                    case '2': 
                         var category = ChooseTypeOfItem();
                         ItemsView(category, true);
                         GoToMenuView();
@@ -48,7 +51,6 @@ namespace TableTennisShop.App.Managers
                         var id = AddNewItem();
                         break;
                     case '5':
-                        // Update item details
                         var itemToUpdate = ItemDetailsView();
                         if (itemToUpdate != null)
                         {
