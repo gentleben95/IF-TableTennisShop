@@ -14,7 +14,7 @@ namespace TableTennisShop.App.Concrete
     {
         public ItemService(string path)
         {
-            ReadXml(path);
+            Items = (List<Item>)ReadXml(path);
         }
         public Item UpdateItemDetails(Item item, string name, TypeOfItem typeId, LevelOfAdvancement levelId, int price)
         {
