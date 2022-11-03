@@ -14,13 +14,14 @@ namespace TableTennisShop.App.Concrete
     {
         public ItemService(string path)
         {
-            ReadXml(@"C:\Users\benia\Testing\TableTennisShop.xml");
+            ReadXml(path);
         }
-        public Item UpdateItemDetails(Item item, string name, TypeOfItem typeId, LevelOfAdvancement levelId)  // Czemu to ma byc tutaj a nie w ItemManager?
+        public Item UpdateItemDetails(Item item, string name, TypeOfItem typeId, LevelOfAdvancement levelId, int price)
         {
             item.Name = name;
             item.TypeId = typeId;
             item.LevelId = levelId;
+            item.Price = price;
             return item;
         }
     }

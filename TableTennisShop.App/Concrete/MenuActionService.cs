@@ -30,7 +30,7 @@ namespace TableTennisShop.App.Concrete
         }
         private void Initialize()
         {
-            AddItem(new MenuAction(0, "Exit", "Main"));
+            AddItem(new MenuAction(0, "Save and exit", "Main"));
             AddItem(new MenuAction(1, "Item service", "Main"));
 
             AddItem(new MenuAction(0, "Back", "ItemView"));
@@ -40,6 +40,7 @@ namespace TableTennisShop.App.Concrete
             AddItem(new MenuAction(4, "Add item", "ItemView"));
             AddItem(new MenuAction(5, "Update item details", "ItemView"));
             AddItem(new MenuAction(6, "Remove item", "ItemView"));
+            AddItem(new MenuAction(7, "Save changes", "ItemView"));
 
             AddItem(new MenuAction(1, $"{TypeOfItem.TableTennisRackets}", "TypeOfItemView"));
             AddItem(new MenuAction(2, $"{TypeOfItem.TableTennisBalls}", "TypeOfItemView"));

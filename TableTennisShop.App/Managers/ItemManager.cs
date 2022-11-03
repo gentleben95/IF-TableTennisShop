@@ -32,7 +32,7 @@ namespace TableTennisShop.App.Managers
                 switch (chosenOption)
                 {
                     case '0':
-                        baseService.SaveXml(_itemService, @"C:\Users\benia\Testing\TableTennisShop.xml");
+
                         break;
                     case '1': 
                         ItemsView(null, true);
@@ -67,8 +67,8 @@ namespace TableTennisShop.App.Managers
                         }
                         GoToMenuView();
                         break;
-
                 }
+                break;
             }
         }
 
@@ -77,12 +77,12 @@ namespace TableTennisShop.App.Managers
             Console.Clear();
             Console.WriteLine("Type in item name: ");
             string name = Console.ReadLine();
-            int level = ChooseTypeOfItem();
-            int type = ChooseLevelOfAdvancement(); 
+            int type = ChooseTypeOfItem();
+            int level = ChooseLevelOfAdvancement();
+            Console.WriteLine("Enter the price in $: ");
+            int loadedPrice = int.Parse(Console.ReadLine());
 
-
-
-            _itemService.UpdateItemDetails(item, name, (TypeOfItem)type, (LevelOfAdvancement)level);
+            _itemService.UpdateItemDetails(item, name, (TypeOfItem)type, (LevelOfAdvancement)level, loadedPrice);
             return item;
         }
         
@@ -103,8 +103,6 @@ namespace TableTennisShop.App.Managers
             var id = _itemService.GetLastId();
             Item itemToAdd = new Item() { Id = id + 1 };
             AskUserAboutItemDetailsView(itemToAdd);
-
-
             _itemService.AddItem(itemToAdd);
             return itemToAdd.Id;
         }
@@ -133,18 +131,8 @@ namespace TableTennisShop.App.Managers
                 }
                 readInt = int.Parse(Console.ReadLine());
                 string readString = readInt.ToString();
-                if (readString != "1" || readString != "2" || readString != "3")
-                {
-                    Console.WriteLine("----------");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Enter the appropriate number!");          
-                    Console.ResetColor();
-                    Console.WriteLine("----------");
-                }
-                if (readString == "1" || readString == "2" || readString == "3")
-                {
-                    break;
-                }  
+                Console.Clear();
+                break;
             }
             return readInt;
         }
@@ -163,25 +151,13 @@ namespace TableTennisShop.App.Managers
                 }
                 readInt = int.Parse(Console.ReadLine());
                 string readString = readInt.ToString();
-                if (readString != "1" || readString != "2" || readString != "3")
-                {
-                    Console.WriteLine("----------");
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Enter the appropriate number!");
-                    Console.ResetColor();
-                    Console.WriteLine("----------");
-                }
-                if (readString == "1" || readString == "2" || readString == "3")
-                {
-                    break;
-                }
+                break;
             }
+            Console.Clear();
             return readInt;
-
-
         }
         
-        private bool ItemsView(int? typeId, bool viewInMenu) // CO TU ZNACZY "INT?"
+        private bool ItemsView(int? typeId, bool viewInMenu) 
         {
             List<Item> Items;
             if (viewInMenu)
@@ -190,7 +166,7 @@ namespace TableTennisShop.App.Managers
             }
             if (typeId != null)
             {
-                Items = _itemService.GetAllItems().Where(p => (int)p.TypeId == typeId).ToList();  // NIE ROZUMIEM TEGO
+                Items = _itemService.GetAllItems().Where(p => (int)p.TypeId == typeId).ToList(); 
             }
             else
             {
@@ -238,6 +214,7 @@ namespace TableTennisShop.App.Managers
             Console.WriteLine($"Type: {item.TypeId}");
             Console.WriteLine($"Name: {item.Name}");
             Console.WriteLine($"Level: {item.LevelId}");
+            Console.WriteLine($"Price: {item.Price}");
         }
     }
 }

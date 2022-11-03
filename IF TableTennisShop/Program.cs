@@ -2,6 +2,9 @@
 using TableTennisShop.App.Concrete;
 using TableTennisShop.Domain.Helpers;
 using TableTennisShop.App.Managers;
+using TableTennisShop.App.Common;
+using TableTennisShop.Domain.Entity;
+using System.Xml.Serialization;
 
 namespace IF_TableTennisShop
 {
@@ -10,8 +13,9 @@ namespace IF_TableTennisShop
         static void Main(string[] args)
         {
             MenuActionService actionService = new MenuActionService();
-            ItemService itemService = new ItemService(@"");
+            ItemService itemService = new ItemService(@"C:\Users\benia\Testing\TableTennisShop.xml");
             ItemManager itemManager = new ItemManager(itemService, actionService);
+            BaseService<Item> baseService = new();
 
             while (true)
             {
@@ -28,15 +32,17 @@ namespace IF_TableTennisShop
                 switch (chosenOption)
                 {
                     case '0':
-                        // xml save to file
+                        baseService.SaveXml(@"C:\Users\benia\Testing\TableTennisShop.xml");
                         Environment.Exit(0);
                         break;
                     case '1':
                         itemManager.SelectOptionInItemMenu();
                         break;
+                    default:
+                        Console.WriteLine("Try again");
+                        break;
                 }
-
-                  
+                
             }
         }
     }

@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using TableTennisShop.App.Abstract;
 using TableTennisShop.App.Concrete;
 using TableTennisShop.Domain.Common;
+using TableTennisShop.Domain.Entity;
 
 namespace TableTennisShop.App.Common
 {
@@ -74,22 +75,24 @@ namespace TableTennisShop.App.Common
             }
             return lastId;
         }
-        public void SaveXml(ItemService itemservice, string path) // Add save and read from xml
+        public void SaveXml(string path)
         {
-            string xml = "";
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemService));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
             TextWriter writer = new StreamWriter(path);
-            xmlSerializer.Serialize(writer, itemservice);
+            xmlSerializer.Serialize(writer, Items);
+            
         }
-        public void ReadXml (string path)
+        public IEnumerable<T> ReadXml (string path)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ItemService));
-            ItemService itemService;
-            using (XmlReader reader = XmlReader.Create(path))
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
+            if (!File.Exists(path))
             {
-                itemService = (ItemService)xmlSerializer.Deserialize(reader);
+                return new List<T>();
             }
-            Console.WriteLine();
+            var xmlRead = File.ReadAllText(path);
+            var stringReader = new StringReader(xmlRead);
+            var items = (List<T>)xmlSerializer.Deserialize(stringReader);
+            return items;
         }
     }
 }
