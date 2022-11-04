@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -75,23 +76,31 @@ namespace TableTennisShop.App.Common
             }
             return lastId;
         }
-        public void SaveXml(string path)
+        public void SaveXml(string elementName, string path)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
-            TextWriter writer = new StreamWriter(path);
-            xmlSerializer.Serialize(writer, Items);
+            XmlRootAttribute root = new();
+            root.ElementName = elementName;
+            root.IsNullable = true;
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>), root);
+            StreamWriter streamWriter = new StreamWriter(path);
+            xmlSerializer.Serialize(streamWriter, Items);
+
             
         }
-        public IEnumerable<T> ReadXml (string path)
+        public IEnumerable<T> ReadXml (string elementName, string path)
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
+            XmlRootAttribute root = new();
+            root.ElementName = elementName;
+            root.IsNullable = true;
+
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>), root);
             if (!File.Exists(path))
             {
                 return new List<T>();
             }
             var xmlRead = File.ReadAllText(path);
             var stringReader = new StringReader(xmlRead);
-            var items = (List<T>)xmlSerializer.Deserialize(stringReader);
+            var items = (List<T>?)xmlSerializer.Deserialize(stringReader);
             return items;
         }
     }

@@ -11,7 +11,6 @@ namespace TableTennisShop.App.Managers
     {
         private readonly MenuActionService _actionService;
         private ItemService _itemService;
-        BaseService<Item> baseService = new();
         public ItemManager(ItemService itemService, MenuActionService actionService)
         {
             _actionService = actionService;
@@ -29,10 +28,10 @@ namespace TableTennisShop.App.Managers
                     Console.WriteLine($"{itemsView[i].Id}. {itemsView[i].Name}"); 
                 }
                 var chosenOption = Console.ReadKey().KeyChar;
+                if (chosenOption == '0') break;
                 switch (chosenOption)
                 {
                     case '0':
-
                         break;
                     case '1': 
                         ItemsView(null, true);
@@ -65,10 +64,11 @@ namespace TableTennisShop.App.Managers
                             RemoveById(idToRemove);
                             Console.Clear();
                         }
+                        break;
+                    default:
                         GoToMenuView();
                         break;
                 }
-                break;
             }
         }
 

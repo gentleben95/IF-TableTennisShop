@@ -16,7 +16,7 @@ namespace TableTennisShop.App.Concrete
         {
             Initialize();
         }
-        public List<MenuAction> GetMenuActionsByMenuName(string menuName)
+        public List<MenuAction> GetMenuActionsByMenuName(string menuName) // Czemu lista Items jest i tutaj i dla itemów ze sklepu?
         {
             List<MenuAction> result = new List<MenuAction>();
             foreach (var menuAction in Items)

@@ -15,7 +15,6 @@ namespace IF_TableTennisShop
             MenuActionService actionService = new MenuActionService();
             ItemService itemService = new ItemService(@"C:\Users\benia\Testing\TableTennisShop.xml");
             ItemManager itemManager = new ItemManager(itemService, actionService);
-            BaseService<Item> baseService = new();
 
             while (true)
             {
@@ -32,7 +31,7 @@ namespace IF_TableTennisShop
                 switch (chosenOption)
                 {
                     case '0':
-                        baseService.SaveXml(@"C:\Users\benia\Testing\TableTennisShop.xml");
+                        itemService.SaveXml( "Items",@"C:\Users\benia\Testing\TableTennisShop.xml");
                         Environment.Exit(0);
                         break;
                     case '1':
@@ -42,7 +41,6 @@ namespace IF_TableTennisShop
                         Console.WriteLine("Try again");
                         break;
                 }
-                
             }
         }
     }
